@@ -18,12 +18,15 @@
     remote_src: yes
     owner: www-data
 
-- name: Enable the Apache2 module wordpress
-  community.general.apache2_module:
-    state: present
-    name: wordpress
-  notify:
-  - restart apache
+
+- name: enable site
+  command: a2ensite wordpress
+#- name: Enable the Apache2 module wordpress
+#  community.general.apache2_module:
+#    state: present
+#    name: wordpress
+#  notify:
+#  - restart apache
 
 - name: enable rewrite
   command: sudo a2enmod rewrite
