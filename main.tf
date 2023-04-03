@@ -17,8 +17,3 @@ module "wordpress_terraform" {
     source = "$HOME/wordpress-aws/module"
     public_key = aws_key_pair.key_pair.key_name
 }
-
-output "ip_adresses" {
-   value =  {for k, v in module.wordpress_terraform :
-    k => "${v.wordpress_ip};${v.mysql_ip}"}
-}
