@@ -5,6 +5,11 @@
     state: present
     update_cache: true
 
+- name: install python3-pymysql
+  apt:
+    name: python3-pymysql
+    state: present
+
 - name: Create a new database with name 'wordpress'
   community.mysql.mysql_db:
     name: wordpress
