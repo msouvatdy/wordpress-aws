@@ -14,6 +14,14 @@ resource "aws_key_pair" "key_pair" {
 
 module "wordpress_terraform" {
     #source path to the module file
-    source = "$HOME/wordpress-aws/module"
+    source = "/home/ubuntu/wordpress-aws/module"
     public_key = aws_key_pair.key_pair.key_name
+}
+
+output "ip_address_wordpress" {
+  value = aws_instance.wordpress.public_ip
+}
+
+output "ip_address_mysql" {
+  value = aws_instance.mysql.public_ip
 }
