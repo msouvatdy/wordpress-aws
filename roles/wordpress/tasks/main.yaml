@@ -22,9 +22,10 @@
   copy:
     src: "{{ role_path }}/files/wordpress.conf"
     dest: /etc/apache2/sites-available/wordpress.conf
+    owner: www-data
 
 - name: enable site
-  command: a2ensite wordpress
+  command: sudo a2ensite wordpress
 #- name: Enable the Apache2 module wordpress
 #  community.general.apache2_module:
 #    state: present
@@ -48,6 +49,6 @@
 - name: configure wordpress to connect to db
   copy:
     src: "{{ role_path }}/files/wp-config.php"
-    dest: /var/www/wp-config.php
+    dest: /var/www/wordpress/wp-config.php
     owner: www-data
 
