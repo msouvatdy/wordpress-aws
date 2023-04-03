@@ -18,6 +18,10 @@
     remote_src: yes
     owner: www-data
 
+- name: create apache site for wordpress
+  copy:
+    src: "{{ role_path }}/files/wordpress.conf"
+    dest: /etc/apache2/sites-available/wordpress.conf
 
 - name: enable site
   command: a2ensite wordpress
