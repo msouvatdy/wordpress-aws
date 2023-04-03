@@ -1,0 +1,46 @@
+---
+- name: install dependancies
+  apt:
+    update_cache: true
+    state: present
+    name: "{{ dependances }}"
+
+- name: Change file ownership
+  ansible.builtin.file:
+    path: /var/www
+    owner: www-data
+    group: www-data
+
+- name: Get wordpress archive
+  unarchive:
+    src: https://wordpress.org/latest.tar.gz
+    dest: /var/www/
+    remote_src: yes
+    owner: www-data
+
+- name: Enable the Apache2 module wordpress
+  community.general.apache2_module:
+    state: present
+    name: wordpress
+  notify:
+  - restart apache
+
+- name: enable rewrite
+  command: sudo a2enmod rewrite
+  notify:
+  - restart apache
+
+- name: disable 000-default
+  community.general.apache2_module:
+    state: absent
+    name: 000-default
+  notify:
+  - restart apache
+
+#you can change the unique phrase using https://api.wordpress.org/secret-key/1.1/salt/ (maybe implemented later)
+- name: configure wordpress to connect to db
+  copy:
+    src: "{{ role_path }}/files/wp-config.php"
+    dest: /var/www/wp-config.php
+    owner: www-data
+
