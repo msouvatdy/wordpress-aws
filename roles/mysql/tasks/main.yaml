@@ -20,6 +20,7 @@
   community.mysql.mysql_user:
     name: wordpress
     password: "{{ db_password }}"
+    hosts: wordpress
     priv: '*.*:ALL'
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
