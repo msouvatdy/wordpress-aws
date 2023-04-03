@@ -39,11 +39,12 @@
   - restart apache
 
 - name: disable 000-default
-  community.general.apache2_module:
-    state: absent
-    name: 000-default
-  notify:
-  - restart apache
+  command: sudo a2dissite 000-default
+#  community.general.apache2_module:
+#    state: absent
+#    name: 000-default
+#  notify:
+#  - restart apache
 
 #you can change the unique phrase using https://api.wordpress.org/secret-key/1.1/salt/ (maybe implemented later)
 - name: configure wordpress to connect to db
