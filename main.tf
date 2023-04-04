@@ -18,7 +18,6 @@ module "wordpress_terraform" {
     public_key = aws_key_pair.key_pair.key_name
 }
 
-output "ip_address" {
-  value = {for k, v in module.infra_k8s :
-  k => "${v.wordpress_ip}"}
-}
+output "wordpress ip_address" {
+    value = module.wordpress_terraform.wordpress_ip
+} 
