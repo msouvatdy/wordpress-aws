@@ -52,7 +52,7 @@ resource "aws_instance" "instance" {
   key_name               = var.public_key
   
   tags = {
-    Name = each.value
+    Name = wordpress
     Formation = var.personal_name
   }
 }
