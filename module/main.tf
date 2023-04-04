@@ -22,7 +22,7 @@ resource "aws_subnet" "main" {
 
 resource "aws_instance" "instance" {
   for_each               = toset(var.instance_names)
-  Formation_data = <<-EOF
+  user_data = <<-EOF
                 sudo hostname ${each.value}
                 echo ${each.value} | sudo tee /etc/hostname
                 EOF
