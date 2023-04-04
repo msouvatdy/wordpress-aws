@@ -18,6 +18,6 @@ module "wordpress_terraform" {
     public_key = aws_key_pair.key_pair.key_name
 }
 
-output "wordpress ip_address" {
+output "wordpress_ip_address" {
     value = module.wordpress_terraform.wordpress_ip
 } 
