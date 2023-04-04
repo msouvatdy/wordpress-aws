@@ -42,6 +42,9 @@
 - name: make sure that /var/lib/mysql exist
   ansible.builtin.file:
     path: /var/lib/mysql
+    owner: mysql
+    group: mysql
+    mode: 0700
     state: directory
 
 - name: make sure that /var/www exist

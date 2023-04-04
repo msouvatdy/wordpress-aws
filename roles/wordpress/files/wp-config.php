@@ -14,9 +14,14 @@ define('SECURE_AUTH_SALT', 's|cE7:,-=M4H.<yq8k+WM*+M,L&,Cm&-$H4&.g$z7Q=g+@:N,A<:
 define('LOGGED_IN_SALT',   's@=[xZkqJzt EJ>GcqS+yn^*9$)I>;s_hjlk+{J}o-#Cc]WWOPz~:`^N:yY@or|i');
 define('NONCE_SALT',       'Q[??[Lm![+*Z 9zTRwJ6fCv-a_/N,A|4dQHF.R8DPc,/?[ulcXX-m.%e8sls+O>#');
 $table_prefix = 'wp_';
+define('WP_SITE_NAME', 'Formation FinOps');
+define( 'WP_LANG', 'fr_FR' );
+define( 'WP_DEFAULT_USERNAME', 'admin' );
+define( 'WP_DEFAULT_PASSWORD', 'MonSuperMotDePasse12345!!!' );
+define( 'WP_MAIL_FROM', 'exemple@ilkiformation.fr');
 define( 'WP_DEBUG', false );
+
 if ( ! defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', __DIR__ . '/' );
 }
 require_once ABSPATH . 'wp-settings.php';
-?>
