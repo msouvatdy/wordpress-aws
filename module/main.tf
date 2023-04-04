@@ -4,7 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_support = true
   tags = {
     Name = "FinOps-wordpress"
-    User = var.personal_name
+    Formation = var.personal_name
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_subnet" "main" {
   map_public_ip_on_launch = true
   tags = {
     Name = "subnetFinOps-wordpress"
-    User = var.personal_name
+    Formation = var.personal_name
   }
 }
 
@@ -22,7 +22,7 @@ resource "aws_subnet" "main" {
 
 resource "aws_instance" "instance" {
   for_each               = toset(var.instance_names)
-  user_data = <<-EOF
+  Formation_data = <<-EOF
                 sudo hostname ${each.value}
                 echo ${each.value} | sudo tee /etc/hostname
                 EOF
@@ -34,7 +34,7 @@ resource "aws_instance" "instance" {
   
   tags = {
     Name = each.value
-    User = var.personal_name
+    Formation = var.personal_name
   }
 }
 
@@ -42,7 +42,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
   tags = {
     Name = "gw-FinOps-wordpress"
-    User = var.personal_name
+    Formation = var.personal_name
   }
 }
 

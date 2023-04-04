@@ -9,5 +9,5 @@ variable "public_key" {
 
 variable "personal_name" {
   default = "Formation FinOps"
-  description = "Valeur du TAG user pour toutes les ressources créer par terraform"
+  description = "Valeur du TAG formation pour toutes les ressources créer par terraform"
 }
