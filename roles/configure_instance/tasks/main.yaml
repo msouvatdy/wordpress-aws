@@ -1,0 +1,14 @@
+---
+- name: Create a new ext4 primary partition for mysql
+  community.general.parted:
+    device: /dev/xvdh
+    number: 1
+    state: present
+    fs_type: ext4
+
+- name: Create a new ext4 primary partition for wordpress
+  community.general.parted:
+    device: /dev/xvdi
+    number: 1
+    state: present
+    fs_type: ext4
