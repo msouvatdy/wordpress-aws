@@ -18,6 +18,23 @@ resource "aws_subnet" "main" {
   }
 }
 
+resource "aws_ebs_volume" "bdd_wordpress" {
+  availability_zone = "us-east-2a"
+  size              = 20
+  tags = {
+    Name = "volume-mysql-FinOps"
+    Formation = var.personal_name
+  }
+}
+
+resource "aws_ebs_volume" "site_wordpress" {
+  availability_zone = "us-east-2a"
+  size              = 20
+  tags = {
+    Name = "volume-wordpress-FinOps"
+    Formation = var.personal_name
+  }
+}
 
 
 resource "aws_instance" "instance" {
@@ -36,6 +53,18 @@ resource "aws_instance" "instance" {
     Name = each.value
     Formation = var.personal_name
   }
+}
+
+resource "aws_volume_attachment" "bdd_wordpress" {
+  device_name = "/dev/sdc"
+  volume_id   = aws_ebs_volume.bdd_wordpress.id
+  instance_id = aws_instance.instance.wordpress.id
+}
+
+resource "aws_volume_attachment" "site_wordpress" {
+  device_name = "/dev/sdd"
+  volume_id   = aws_ebs_volume.site_wordpress.id
+  instance_id = aws_instance.instance.wordpress.id
 }
 
 resource "aws_internet_gateway" "gw" {
