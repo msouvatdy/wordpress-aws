@@ -1,2 +1,1 @@
-wordpress
-mysql
+wordpress ansible_host=0.0.0.0

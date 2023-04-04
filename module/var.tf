@@ -1,5 +1,5 @@
 variable "instance_names" {
-  default = ["wordpress", "mysql"]
+  default = ["wordpress"]
 }
 
 variable "public_key" {
