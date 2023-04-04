@@ -2,7 +2,7 @@
 define( 'DB_NAME', 'wordpress' );
 define( 'DB_USER', 'wordpress' );
 define( 'DB_PASSWORD', '12345' );
-define( 'DB_HOST', 'mysql' );
+define( 'DB_HOST', 'localhost' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 define('AUTH_KEY',         'l*<{RJ`O-LUX48X;[-`eO=|/;f,ml^I ,4rYtR/B$`9.P{fTrh`zA.R}N{F)ArIL');
