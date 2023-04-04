@@ -38,11 +38,13 @@ resource "aws_ebs_volume" "site_wordpress" {
 
 
 resource "aws_instance" "instance" {
-  for_each               = toset(var.instance_names)
-  user_data = <<-EOF
-                sudo hostname ${each.value}
-                echo ${each.value} | sudo tee /etc/hostname
-                EOF
+  #for_each               = toset(var.instance_names)
+
+  #user_data = <<-EOF
+  #              sudo hostname ${each.value}
+  #              echo ${each.value} | sudo tee /etc/hostname
+  #              EOF
+  name                   = wordpress
   ami                    = data.aws_ami.ubuntu.image_id
   instance_type          = "t2.medium"
   subnet_id              = aws_subnet.main.id
@@ -58,13 +60,13 @@ resource "aws_instance" "instance" {
 resource "aws_volume_attachment" "bdd_wordpress" {
   device_name = "/dev/sdc"
   volume_id   = aws_ebs_volume.bdd_wordpress.id
-  instance_id = aws_instance.instance.wordpress.id
+  instance_id = aws_instance.instance.id
 }
 
 resource "aws_volume_attachment" "site_wordpress" {
   device_name = "/dev/sdd"
   volume_id   = aws_ebs_volume.site_wordpress.id
-  instance_id = aws_instance.instance.wordpress.id
+  instance_id = aws_instance.instance.id
 }
 
 resource "aws_internet_gateway" "gw" {
