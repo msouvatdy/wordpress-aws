@@ -12,7 +12,7 @@ resource "aws_subnet" "main" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.20.30.0/24"
   map_public_ip_on_launch = true
-  availability_zone = "us-west-2a"
+  availability_zone = "us-east-2a"
   tags = {
     Name = "subnetFinOps-wordpress"
     Formation = var.personal_name
