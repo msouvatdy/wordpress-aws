@@ -4,6 +4,7 @@ resource "aws_vpc" "main" {
   enable_dns_support = true
   tags = {
     Name = "FinOps-wordpress"
+    User = "var.personal_name"
   }
 }
 
@@ -13,6 +14,7 @@ resource "aws_subnet" "main" {
   map_public_ip_on_launch = true
   tags = {
     Name = "subnetFinOps-wordpress"
+    User = "var.personal_name"
   }
 }
 
@@ -23,7 +25,6 @@ resource "aws_instance" "instance" {
   user_data = <<-EOF
                 sudo hostname ${each.value}
                 echo ${each.value} | sudo tee /etc/hostname
-                git clone https://github.com/msouvatdy/wordpress-aws.git
                 EOF
   ami                    = data.aws_ami.ubuntu.image_id
   instance_type          = "t2.medium"
@@ -33,6 +34,7 @@ resource "aws_instance" "instance" {
   
   tags = {
     Name = each.value
+    User = "var.personal_name"
   }
 }
 
@@ -40,6 +42,7 @@ resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
   tags = {
     Name = "gw-FinOps-wordpress"
+    User = "var.personal_name"
   }
 }
 
