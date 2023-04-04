@@ -17,23 +17,27 @@
   community.general.lvg:
     vg: vg.mysql
     pvs: /dev/xvdh1
+  register: vg_mysql
 
 - name: create volume group for wordpress
   community.general.lvg:
     vg: vg.wordpress
     pvs: /dev/xvdi1
+  register: vg_wordpress
 
 - name: lv for mysql
   community.general.lvol:
     vg: vg.mysql
     lv: lv.mysql
     size: 100%FREE
+  when: vg_mysql.changed
 
 - name: lv for wordpress
   community.general.lvol:
     vg: vg.wordpress
     lv: lv.wordpress
     size: 100%FREE
+  when: vg_wordpress.changed
 
 - name: make sure that /var/lib/mysql exist
   ansible.builtin.file:
@@ -45,10 +49,20 @@
     path: /var/www
     state: directory
 
+- name: Create a ext4 filesystem on /dev/vg.mysql/lv.mysql
+  filesystem:
+    fstype: ext4
+    dev: /dev/vg.mysql/lv.mysql
+
+- name: Create a ext4 filesystem on /dev/vg.wordpress/lv.wordpress
+  filesystem:
+    fstype: ext4
+    dev: /dev/vg.wordpress/lv.wordpress
+
 - name: set in fstab mount for mysql
   lineinfile:
     path: /etc/fstab
-    line: /dev/vg.mysql/lvmysql /var/lib/mysql ext4 defaults 0 0
+    line: /dev/vg.mysql/lv.mysql /var/lib/mysql ext4 defaults 0 0
   register: mysql_vol
 
 - name: set in fstab mount for wordpress
