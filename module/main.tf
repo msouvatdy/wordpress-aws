@@ -12,6 +12,7 @@ resource "aws_subnet" "main" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.20.30.0/24"
   map_public_ip_on_launch = true
+  availability_zone = "us-west-2a"
   tags = {
     Name = "subnetFinOps-wordpress"
     Formation = var.personal_name
@@ -57,13 +58,13 @@ resource "aws_instance" "instance" {
 }
 
 resource "aws_volume_attachment" "bdd_wordpress" {
-  device_name = "/dev/sdc"
+  device_name = "/dev/sdh"
   volume_id   = aws_ebs_volume.bdd_wordpress.id
   instance_id = aws_instance.instance.id
 }
 
 resource "aws_volume_attachment" "site_wordpress" {
-  device_name = "/dev/sdd"
+  device_name = "/dev/sdi"
   volume_id   = aws_ebs_volume.site_wordpress.id
   instance_id = aws_instance.instance.id
 }
