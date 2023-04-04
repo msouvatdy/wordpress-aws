@@ -44,7 +44,6 @@ resource "aws_instance" "instance" {
   #              sudo hostname ${each.value}
   #              echo ${each.value} | sudo tee /etc/hostname
   #              EOF
-  name                   = wordpress
   ami                    = data.aws_ami.ubuntu.image_id
   instance_type          = "t2.medium"
   subnet_id              = aws_subnet.main.id
@@ -52,7 +51,7 @@ resource "aws_instance" "instance" {
   key_name               = var.public_key
   
   tags = {
-    Name = wordpress
+    Name = "wordpress"
     Formation = var.personal_name
   }
 }
