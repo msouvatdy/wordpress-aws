@@ -126,10 +126,6 @@ resource "aws_efs_access_point" "wordpress" {
       owner_uid   = 0
       permissions = 0777
     }
-  tags = {
-    Name = "EFS-FinOps-Wordpress"
-    Formation = var.personal_name
-  }
  }
 }
 
