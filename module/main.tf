@@ -105,3 +105,55 @@ resource "aws_security_group" "allow_http" {
     create_before_destroy = true
   }
 }
+
+resource "aws_efs_file_system" "Wordpress_EFS_FinOps" {
+  availability_zone_name = "us-east-2a"
+  lifecycle_policy {
+    transition_to_ia = "AFTER_90_DAYS"
+  }
+ tags = {
+    Name = "EFS-FinOps-Wordpress"
+    Formation = var.personal_name
+ }
+}
+
+resource "aws_efs_access_point" "wordpress" {
+  file_system_id = aws_efs_file_system.Wordpress_EFS_FinOps.id
+  root_directory {
+    path = "/wordpress"
+    creation_info {
+      owner_gid   = 0
+      owner_uid   = 0
+      permissions = 0777
+    }
+  tags = {
+    Name = "EFS-FinOps-Wordpress"
+    Formation = var.personal_name
+  }
+ }
+}
+
+resource "aws_efs_access_point" "mysql" {
+  file_system_id = aws_efs_file_system.Wordpress_EFS_FinOps.id
+  root_directory {
+    path = "/mysql"
+    creation_info {
+      owner_gid   = 0
+      owner_uid   = 0
+      permissions = 0777
+    }
+  }
+}
+
+resource "aws_efs_backup_policy" "policy_FinOps" {
+  file_system_id = aws_efs_file_system.Wordpress_EFS_FinOps.id
+  backup_policy {
+    status = "ENABLED"
+  }
+}
+
+resource "aws_efs_mount_target" "FinOps_Wordpress" {
+  file_system_id  = aws_efs_file_system.Wordpress_EFS_FinOps.id
+  subnet_id       = aws_subnet.main.id
+  security_groups = [aws_security_group.allow_http.id]
+}
