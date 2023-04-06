@@ -14,7 +14,7 @@ resource "aws_subnet" "main" {
   map_public_ip_on_launch = true
   availability_zone = "us-east-2a"
   tags = {
-    Name = "subnetFinOps-wordpress"
+    Name = var.personal_name
     Formation = var.personal_name
   }
 }
@@ -23,7 +23,7 @@ resource "aws_ebs_volume" "bdd_wordpress" {
   availability_zone = "us-east-2a"
   size              = 20
   tags = {
-    Name = "volume-mysql-FinOps"
+    Name = var.personal_name
     Formation = var.personal_name
   }
 }
@@ -32,7 +32,7 @@ resource "aws_ebs_volume" "site_wordpress" {
   availability_zone = "us-east-2a"
   size              = 20
   tags = {
-    Name = "volume-wordpress-FinOps"
+    Name = var.personal_name
     Formation = var.personal_name
   }
 }
@@ -52,7 +52,7 @@ resource "aws_instance" "instance" {
   key_name               = var.public_key
   
   tags = {
-    Name = "wordpress"
+    Name = var.personal_name
     Formation = var.personal_name
   }
 }
@@ -72,7 +72,7 @@ resource "aws_volume_attachment" "site_wordpress" {
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.main.id
   tags = {
-    Name = "gw-FinOps-wordpress"
+    Name = var.personal_name
     Formation = var.personal_name
   }
 }
@@ -85,7 +85,7 @@ resource "aws_route" "r" {
 
 resource "aws_security_group" "allow_http" {
   vpc_id      = aws_vpc.main.id
-  name        = "FinOps-wordpress"
+  name        = var.personal_name
   description = "FinOps"
 
   ingress {
@@ -112,7 +112,7 @@ resource "aws_efs_file_system" "Wordpress_EFS_FinOps" {
     transition_to_ia = "AFTER_90_DAYS"
   }
  tags = {
-    Name = "EFS-FinOps-Wordpress"
+    Name = var.personal_name
     Formation = var.personal_name
  }
 }
