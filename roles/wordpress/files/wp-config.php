@@ -21,28 +21,4 @@ define( 'WP_DEFAULT_PASSWORD', 'MonSuperMotDePasse12345!!!' );
 define( 'WP_MAIL_FROM', 'pepito@ilkiformation.fr');
 define( 'WP_DEBUG', false );
 
-// Définition des informations du compte administrateur
-$username = 'admin';
-$password = 'MonSuperMotDePasse12345!!!';
-$email = 'admin@ilkiformation.fr';
-
-// Création du compte administrateur
-$user_id = username_exists( $username );
-if ( ! $user_id ) {
-  $user_id = wp_create_user( $username, $password, $email );
-  if ( is_wp_error( $user_id ) ) {
-    // Gestion des erreurs, si nécessaire
-  } else {
-    // Attribution du rôle d'administrateur
-    wp_update_user( array(
-      'ID' => $user_id,
-      'role' => 'administrator'
-    ) );
-  }
-}
-
-
-if ( ! defined( 'ABSPATH' ) ) {
-        define( 'ABSPATH', __DIR__ . '/' );
-}
 require_once ABSPATH . 'wp-settings.php';
